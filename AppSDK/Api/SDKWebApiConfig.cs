@@ -1,11 +1,14 @@
 ﻿using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using System.Web.Http.Dispatcher;
+using AppSDK.Managers.RouteManager;
+using System.Collections.Generic;
 
 namespace AppSDK.Api
 {
     public static class SDKWebApiConfig
     {
+        public static List<RouteEntry> RouteEntryList = new List<RouteEntry>();
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
@@ -14,7 +17,7 @@ namespace AppSDK.Api
             //config.SuppressDefaultHostAuthentication();
             //config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
-            config.Services.Replace(typeof(IHttpControllerSelector), new ApiControllerSelector(config));
+            //config.Services.Replace(typeof(IHttpControllerSelector), new ApiControllerSelector(config));
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -24,6 +27,16 @@ namespace AppSDK.Api
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            //for (int i = 0; i < RouteEntryList.Count; i++)
+            //{
+            //    config.Routes.MapHttpRoute(
+            //      name: RouteEntryList[i].Name,
+            //      routeTemplate: RouteEntryList[i].Url,
+            //      defaults: RouteEntryList[i].Defaults
+            //     );
+            //}
+
         }
     }
 }

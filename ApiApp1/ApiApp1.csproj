@@ -98,7 +98,8 @@
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Models\Seeds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Ui\UiService.cs" />
+    <Compile Include="Views\MoviesuiController.cs" />
+    <Compile Include="Views\UiService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

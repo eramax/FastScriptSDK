@@ -2,7 +2,7 @@
 
 namespace AppSDK.Managers.RouteManager
 {
-    class RouteEntry
+    public class RouteEntry
     {
         public object Defaults { get; set; }
 

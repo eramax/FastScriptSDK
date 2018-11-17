@@ -1,11 +1,11 @@
 ﻿using AppSDK.Managers.UiManager;
 using BulmaUiManager;
 
-namespace ApiApp1.Ui
+namespace ApiApp1.Views
 {
     public class UiService
     {
-        public Layout build3()
+        public Layout Build3()
         {
             Layout layout = new Layout("bm1");
             BM warpper = BM.Div("wpp22");
