@@ -19,18 +19,6 @@ namespace AppSDK.Managers.RouteManager
             var routeEntryList = new List<RouteEntry>
             {
                 new RouteEntry("User/Login", "User", "Login"),
-                //new RouteEntry("User/ELogin", "User", "ELogin"),
-
-                //new RouteEntry("Home/ContactUs", "Home", "ContactUs"),
-                //new RouteEntry("Schedule/{id}", "Schedule", "Index"),
-
-                //new RouteEntry("User/ForgetPassword", "User", "ForgetPassword"),
-                //new RouteEntry("User/ForgetPasswordChoice", "User", "ForgetPasswordChoice"),
-                //new RouteEntry("User/ActivateAccount", "User", "ActivateAccount"),
-                //new RouteEntry("User/ChangePassword", "User", "ChangePassword"),
-                //new RouteEntry("User/AddUserRegisteration", "User", "AddUserRegisteration"),
-                //new RouteEntry("DefaultCaptcha/Generate", "DefaultCaptcha", "Generate"),
-                //new RouteEntry("DefaultCaptcha/refresh", "DefaultCaptcha", "refresh")
             };
 
             for (int i = 0; i < routeEntryList.Count; i++)
