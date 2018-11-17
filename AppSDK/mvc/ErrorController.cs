@@ -20,11 +20,5 @@ namespace AppSDK.mvc
             return Content("Error: Not Found 404");
         }
     }
-    public class ErrorApiController : ApiController
-    {
-        public string Get()
-        {
-            return "Error: Not Found 404";
-        }
-    }
+
 }

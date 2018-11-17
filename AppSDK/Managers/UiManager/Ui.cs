@@ -76,7 +76,7 @@ namespace AppSDK.Managers.UiManager
             return left;
         }
 
-        public Ui addTo(ref Ui t)
+        public Ui AddTo(ref Ui t)
         {
             t.Add(this);
             return this;

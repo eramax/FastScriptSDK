@@ -192,27 +192,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\MoviesController.cs" />
+    <Compile Include="Controllers\UiController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Auth\AccountBindingModels.cs" />
-    <Compile Include="Models\Auth\AccountViewModels.cs" />
-    <Compile Include="Models\Auth\IdentityModels.cs" />
+    <Compile Include="Models\DContext.cs" />
+    <Compile Include="Models\Movie.cs" />
+    <Compile Include="Models\Ui\UiService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\Auth\ApplicationOAuthProvider.cs" />
-    <Compile Include="Models\Auth\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -225,9 +217,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
@@ -235,10 +225,6 @@
     <ProjectReference Include="..\..\AppSDK\AppSDK.csproj">
       <Project>{9cd509f6-fdbe-4850-9578-6980fed15525}</Project>
       <Name>AppSDK</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Managers\BulmaUiManager\BulmaUiManager.csproj">
-      <Project>{8d05f5d8-707e-4bf1-a527-a22adb38cf29}</Project>
-      <Name>BulmaUiManager</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

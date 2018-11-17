@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using AppSDK.Managers.PluginManager;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace AppSDK.mvc
@@ -7,7 +8,8 @@ namespace AppSDK.mvc
     {
         public override IController CreateController(RequestContext requestContext, string controllerName)
         {
-            return PluginManager.GetController(controllerName);
+            var c = PluginManager.GetController(controllerName);
+            return c;
         }
     }
 }

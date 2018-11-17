@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using AppSDK.Managers.PluginManager;
+using System.Web.Mvc;
 
 namespace AppSDK.mvc
 {
