@@ -1,12 +1,13 @@
 ﻿using DbManager.DAL;
 using System.Data.Entity;
 
-namespace WebApp.Models
+namespace ApiApp1.Models
 {
     public class DContext : SdkContext
     {
         public DContext() : base("DefaultConnection") { }
 
+        public DbSet<Animal> Animals { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Cateogry> Cateogries { get; set; }
     }

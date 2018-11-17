@@ -8,7 +8,7 @@ namespace AppSDK.mvc
 {
     public class SdkController<T, TContext> : Controller , IGetNew<Controller> 
         where T : class, IBaseEntity, new()
-        where TContext : DbxContext, new()
+        where TContext : SdkContext, new()
     {
         private UnitOfWork<T, TContext> unitOfWork = new UnitOfWork<T, TContext>();
         // GET: model

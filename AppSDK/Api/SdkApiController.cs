@@ -8,7 +8,7 @@ namespace AppSDK.Api
 {
     public class SdkApiController<T, TContext> : ApiController , IGetNew<ApiController> 
         where T : class, IBaseEntity, new()
-        where TContext : DbxContext, new()
+        where TContext : SdkContext, new()
     {
         private UnitOfWork<T, TContext> unitOfWork = new UnitOfWork<T, TContext>();
         // GET api/<controller>

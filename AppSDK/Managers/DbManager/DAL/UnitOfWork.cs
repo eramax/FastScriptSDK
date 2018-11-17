@@ -1,6 +1,7 @@
 ﻿using DbManager.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 
@@ -8,15 +9,15 @@ namespace DbManager.DAL
 {
     public class UnitOfWork<T,TContext> : IDisposable 
         where T : class, IBaseEntity 
-        where TContext : DbxContext , new()
+        where TContext : SdkContext, new()
     {
         private TContext context = new TContext();
-        private GenericRepository<T> TempRepository;
-        public GenericRepository<T> Repository
+        private Repository<T> TempRepository;
+        public Repository<T> Repository
         {
             get
             {
-                TempRepository =  TempRepository ?? new GenericRepository<T>(context);
+                TempRepository =  TempRepository ?? new Repository<T>(context);
                 return TempRepository;
             }
         }

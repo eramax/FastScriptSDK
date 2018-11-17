@@ -124,12 +124,13 @@
     <Compile Include="interfaces\Interfaces.cs" />
     <Compile Include="Managers\AppStartManager\AppStartManager.cs" />
     <Compile Include="Managers\AppStartManager\SdkStartup.cs" />
-    <Compile Include="Managers\DbManager\DAL\DbxContext.cs" />
-    <Compile Include="Managers\DbManager\DAL\GenericRepository.cs" />
+    <Compile Include="Managers\DbManager\DAL\DbMigrat.cs" />
+    <Compile Include="Managers\DbManager\DAL\SdkContext.cs" />
+    <Compile Include="Managers\DbManager\DAL\Repository.cs" />
     <Compile Include="Managers\DbManager\DAL\UnitOfWork.cs" />
-    <Compile Include="Managers\DbManager\Migrations\Configuration.cs" />
     <Compile Include="Managers\DbManager\Models\BaseEntity.cs" />
     <Compile Include="Managers\DbManager\Models\IBaseEntity.cs" />
+    <Compile Include="Managers\DbManager\Models\ISdkSeed.cs" />
     <Compile Include="Managers\EmailManager\EmailManager.cs" />
     <Compile Include="Managers\FilterManager\FilterConfig.cs" />
     <Compile Include="Managers\RouteManager\RouteConfig.cs" />

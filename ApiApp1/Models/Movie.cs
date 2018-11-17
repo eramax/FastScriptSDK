@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using DbManager.Models;
-namespace WebApp.Models
+namespace ApiApp1.Models
 {
     public class Movie : BaseEntity<Int64>
     {

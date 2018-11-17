@@ -1,18 +1,18 @@
-﻿using DbManager.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
+using DbManager.Models;
 
 namespace DbManager.DAL
 {
-    public class GenericRepository<TEntity> where TEntity : class, IBaseEntity
+    public class Repository<TEntity> where TEntity : class, IBaseEntity
     {
-        internal DbxContext context;
+        internal SdkContext context;
         internal DbSet<TEntity> dbSet;
-        public GenericRepository(DbxContext context)
+        public Repository(SdkContext context)
         {
             this.context = context;
             this.dbSet = context.Set<TEntity>();
@@ -49,6 +49,10 @@ namespace DbManager.DAL
         {
             dbSet.Add(entity);
         }
+        public virtual void Insert(TEntity[] entities)
+        {
+            dbSet.AddRange(entities);
+        }
 
         public virtual void Delete(object id)
         {
@@ -71,6 +75,10 @@ namespace DbManager.DAL
             }
             dbSet.Remove(entityToDelete);
         }
+        public virtual void Update(TEntity[] entitiesToUpdate)
+        {
+            foreach (TEntity entity in entitiesToUpdate) Update(entity);
+        }
         public virtual void Update(TEntity entityToUpdate)
         {
             entityToUpdate.ModifiedDate = DateTime.Now;
@@ -83,5 +91,22 @@ namespace DbManager.DAL
         {
             return dbSet;
         }
+        public virtual void AddOrUpdate(TEntity entity)
+        {
+            var id = entity.Id;
+            if (dbSet.Any(e => e.Id == id))
+            {
+                Update(entity);
+            }
+            else
+            {
+                Insert(entity);
+            }
+        }
+        public virtual void AddOrUpdate(TEntity[] entities)
+        {
+            foreach (TEntity entity in entities) AddOrUpdate(entity);
+        }
+
     }
 }

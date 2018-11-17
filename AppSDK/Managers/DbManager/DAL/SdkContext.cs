@@ -1,18 +1,27 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Linq;
 
 namespace DbManager.DAL
 {
-    public class DbxContext : DbContext
+    public class SdkContext : DbContext
     {
-        public DbxContext(string connection) : base(connection)
+        public SdkContext() : base("name=DefaultConnection") { }
+        public SdkContext(string connection) : base(connection)
         {
         }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            Database.SetInitializer<DbxContext>(null);
             base.OnModelCreating(modelBuilder);
         }
     }
+
+
+ 
+
+
+
 }
