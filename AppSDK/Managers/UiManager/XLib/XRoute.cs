@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AppSDK.Managers.UiManager
+﻿using System.Collections.Generic;
+namespace AppSDK.Managers.UiManager.XLib
 {
     public class XRoute
     {

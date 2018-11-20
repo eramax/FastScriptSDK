@@ -14,23 +14,23 @@ namespace AppSDK.Managers.UiManager.Designer
         where T : class, IBaseEntity, new()
         where TContext : SdkContext, new()
     {
-        [HttpGet]
-        public Ui List()
-        {
-            return Ui.Div("Continer");
-        }
+        //[HttpGet]
+        //public Ui List()
+        //{
+        //    return Ui.Div("Continer");
+        //}
 
-        [HttpGet]
-        public Ui Details()
-        {
-            return Ui.Div("Row");
-        }
+        //[HttpGet]
+        //public Ui Details()
+        //{
+        //    return Ui.Div("Row");
+        //}
 
-        [HttpGet]
-        public Ui Form()
-        {
-            return Ui.Form("/api/movies/post");
-        }
+        //[HttpGet]
+        //public Ui Form()
+        //{
+        //    return Ui.Form("/api/movies/post");
+        //}
 
     }
 }
