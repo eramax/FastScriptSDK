@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Swashbuckle.Application;
 
 namespace AppSDK.Managers.RouteManager
 {
@@ -14,10 +11,20 @@ namespace AppSDK.Managers.RouteManager
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // Set Swagger as default start page
+
+            routes.MapHttpRoute(
+                name: "swagger_root",
+                routeTemplate: "",
+                defaults: null,
+                constraints: null,
+                handler: new RedirectHandler((message => message.RequestUri.ToString()), "swagger"));
+
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Swagger", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
