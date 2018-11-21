@@ -1,15 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 
 namespace AppSDK.Managers.UiManager.XLib
 {
-    public class UiBase<T> : IUI<T> where T : IUI<T>, new()
+    public class UiBase<T> : IUI<T> where T : class , IUI<T>, new()
     {
-        private T Myself = new T();
+        protected T Myself { get; set; } 
         public string Type { get; set; }
         public string Key { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public List<UiVariable> Vars { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, Prop> Props { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public List<T> Childerns { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public TemplateLoader Loader { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public List<object> RepeatWith { get; set; }
+
         public static T New(string _Tag, string _Classes = null, string _Id = null, string _Content = null)
         {
             var ui = new T
@@ -23,39 +38,48 @@ namespace AppSDK.Managers.UiManager.XLib
             if (_Classes != null) ui.AddProp("className", _Classes);
             return ui;
         }
-        public T AddProp(string _PropName, object _PropValue = null, UiFunction _PropValueFunc = null)
+        public T AddProp(string _PropName, object _PropValue = null, UiFunction _PropValueFunc = null , string _Index = null)
         {
             if (Myself.Props == null) Myself.Props = new Dictionary<string, Prop>();
             if (!Myself.Props.ContainsKey(_PropName)) Myself.Props.Add(_PropName, new Prop());
 
             if (_PropValue != null)
             {
-                if (Myself.Props[_PropName].PropValues == null) Myself.Props[_PropName].PropValues = new List<object>();
-                Myself.Props[_PropName].PropValues.Add(_PropValue);
+                if (Myself.Props[_PropName].Values == null) Myself.Props[_PropName].Values = new List<object>();
+                Myself.Props[_PropName].Values.Add(_PropValue);
             }
 
             if (_PropValueFunc != null)
             {
-                if (Myself.Props[_PropName].PropValueFuncs == null) Myself.Props[_PropName].PropValueFuncs = new List<UiFunction>();
-                Myself.Props[_PropName].PropValueFuncs.Add(_PropValueFunc);
+                if (Myself.Props[_PropName].Funcs == null) Myself.Props[_PropName].Funcs = new List<UiFunction>();
+                Myself.Props[_PropName].Funcs.Add(_PropValueFunc);
+            }
+
+            if (_Index != null)
+            {
+                Myself.Props[_PropName].Indexs = new List<string>() { _Index };
             }
             return Myself;
         }
-        public T UpdateProp(string _PropName, object _PropValue = null, UiFunction _PropValueFunc = null)
+        public T UpdateProp(string _PropName, object _PropValue = null, UiFunction _PropValueFunc = null, string _Index = null)
         {
             if (Myself.Props == null) Myself.Props = new Dictionary<string, Prop>();
             if (!Myself.Props.ContainsKey(_PropName)) Myself.Props.Add(_PropName, new Prop());
 
             if (_PropValue != null)
             {
-                if (Myself.Props[_PropName].PropValues == null) Myself.Props[_PropName].PropValues = new List<object>();
-                Myself.Props[_PropName].PropValues.Add(_PropValue);
+                if (Myself.Props[_PropName].Values == null) Myself.Props[_PropName].Values = new List<object>();
+                Myself.Props[_PropName].Values.Add(_PropValue);
             }
 
             if (_PropValueFunc != null)
             {
-                if (Myself.Props[_PropName].PropValueFuncs == null) Myself.Props[_PropName].PropValueFuncs = new List<UiFunction>();
-                Myself.Props[_PropName].PropValueFuncs.Add(_PropValueFunc);
+                if (Myself.Props[_PropName].Funcs == null) Myself.Props[_PropName].Funcs = new List<UiFunction>();
+                Myself.Props[_PropName].Funcs.Add(_PropValueFunc);
+            }
+            if (_Index != null)
+            {
+                Myself.Props[_PropName].Indexs = new List<string>() { _Index };
             }
             return Myself;
         }
@@ -71,15 +95,11 @@ namespace AppSDK.Managers.UiManager.XLib
             Myself.Childerns.AddRange(t);
             return Myself;
         }
-
-
-
         public T AddTo(ref T t)
         {
             t.Add(Myself);
             return Myself;
         }
-
         public T AddVar(string x, object init = null)
         {
             if (Myself.Vars == null) Myself.Vars = new List<UiVariable>();
@@ -87,37 +107,68 @@ namespace AppSDK.Managers.UiManager.XLib
             return Myself;
         }
 
-
-
         //--------------------------------------- ATRUBUITES ---------------------------------//
-        public T Id(string x) { return AddProp("id", x); }
-        public T Class(string x) { return AddProp("className", x); }
-        public T type(string x) { return AddProp("type", x); }
-        public T name(string x) { return AddProp("name", x); }
-        public T value(string x) { return AddProp("value", x); }
-        public T href(string x) { return AddProp("href", x); }
-        public T action(string x) { return AddProp("action", x); }
-        public T to(string x) { return AddProp("to", x); }
-        public T alt(string x) { return AddProp("alt", x); }
-        public T width(int x) { return AddProp("width", x); }
-        public T height(int x) { return AddProp("height", x); }
-        public T activeClassName(string x) { return AddProp("activeClassName", x); }
-        public T src(string x) { return AddProp("src", x); }
-        public T For(string x) { return AddProp("for", x); }
-        public T placeholder(string x) { return AddProp("placeholder", x); }
-        public T method(string x) { return AddProp("method", x); }
-        public T max(string x) { return AddProp("max", x); }
-        public T colspan(string x) { return AddProp("colspan", x); }
-        public T cols(string x) { return AddProp("cols", x); }
-        public T rows(string x) { return AddProp("rows", x); }
+
+        public T Id(string value = null , UiFunction  fun = null , string index = null )
+        { return AddProp("id", value, fun , index); }
+        public T Class(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("className", value, fun, index); }
+        public T type(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("type", value, fun, index); }
+        public T name(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("name", value, fun, index); }
+        public T Value(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("value", value, fun, index); }
+        public T Content(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("Content", value, fun, index); }
+        public T href(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("href", value, fun, index); }
+        public T action(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("action", value, fun, index); }
+        public T to(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("to", value, fun, index); }
+        public T alt(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("alt", value, fun, index); }
+        public T width(int? value = null, UiFunction fun = null, string index = null)
+        { return AddProp("width", value, fun, index); }
+        public T height(int? value = null, UiFunction fun = null, string index = null)
+        { return AddProp("height", value, fun, index); }
+        public T activeClassName(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("activeClassName", value, fun, index); }
+        public T src(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("src", value, fun, index); }
+        public T For(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("for", value, fun, index); }
+        public T placeholder(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("placeholder", value, fun, index); }
+        public T method(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("method", value, fun, index); }
+        public T max(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("max", value, fun, index); }
+        public T colspan(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("colspan", value, fun, index); }
+        public T cols(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("cols", value, fun, index); }
+        public T rows(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("rows", value, fun, index); }
 
         public T hidden() { return AddProp("hidden", true); }
         public T disabled() { return AddProp("disabled", true); }
-        public T role(string x) { return AddProp("role", true); }
-        public T aria_label(string x) { return AddProp("aria-label", true); }
-        public T aria_expanded(string x) { return AddProp("aria-expanded", true); }
-        public T data_target(string x) { return AddProp("data-target", true); }
-        public T aria_hidden(string x) { return AddProp("aria-hidden", true); }
+        public T role(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("role", true); }
+
+        public T aria_label(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("aria-label", true); }
+
+        public T aria_expanded(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("aria-expanded", true); }
+
+        public T data_target(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("data-target", true); }
+
+        public T aria_hidden(string value = null, UiFunction fun = null, string index = null)
+        { return AddProp("aria-hidden", true); }
+
         public T exact() { return AddProp("exact", true); }
         public T selected() { return AddProp("selected", "selected"); }
 
@@ -127,7 +178,19 @@ namespace AppSDK.Managers.UiManager.XLib
         public T OnClick(UiFunction ufunc) { return AddProp("OnClickFunc", null, ufunc); }
         public T OnChange(UiFunction ufunc) { return AddProp("OnChangeFunc", null, ufunc); }
         public T LinkedVar(string propname, string var)
-        { return AddProp(propname, null, new UiFunction() { FuncName = "getVar", Paramaters = new[] { var } }); }
+        { return AddProp(propname, null, new UiFunction("getVar", null, var)); }
+
+        public T RepeatFor(List<object> list)
+        {
+            RepeatWith = new List<object>() { list };
+            return Myself;
+        }
+
+        public T Include(string templateName, string link = null)
+        {
+            Loader = new TemplateLoader() { Name = templateName, Link = link };
+            return Myself;
+        }
 
         public class Tags
         {
@@ -162,7 +225,7 @@ namespace AppSDK.Managers.UiManager.XLib
             { return New(Tag.img, classes).src(src).alt(alt); }
 
             public static T Input(string type, string classes = null, string name = null, string value = null, string placeholder = null)
-            { return New(Tag.input, classes).type(type).name(name).value(value).placeholder(placeholder); }
+            { return New(Tag.input, classes).type(type).name(name).Value(value).placeholder(placeholder); }
 
             public static T Label(string content, string classes = null)
             { return New(Tag.label, classes, null, content); }
@@ -172,7 +235,7 @@ namespace AppSDK.Managers.UiManager.XLib
             public static T Nav(string classes = null) { return New(Tag.nav, classes); }
 
             public static T Option(string content, string value, string classes = null)
-            { return New(Tag.option, classes, null, content).value(value); }
+            { return New(Tag.option, classes, null, content).Value(value); }
 
             public static T P(string content, string classes = null)
             { return New(Tag.p, classes, null, content); }

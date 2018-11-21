@@ -148,11 +148,13 @@
     <Compile Include="Managers\RouteManager\SdkRouteManager.cs" />
     <Compile Include="Managers\SmsManager\SmsManager.cs" />
     <Compile Include="Managers\UiManager\Designer\SdkViewController.cs" />
+    <Compile Include="Managers\UiManager\TemplateLoader.cs" />
     <Compile Include="Managers\UiManager\XLib\Layout.cs" />
     <Compile Include="Managers\UiManager\XLib\Prop.cs" />
     <Compile Include="Managers\UiManager\XLib\SDKTags.cs" />
     <Compile Include="Managers\UiManager\XLib\Tag.cs" />
     <Compile Include="Managers\UiManager\XLib\UiFunction.cs" />
+    <Compile Include="Managers\UiManager\XLib\UixPackage.cs" />
     <Compile Include="Managers\UiManager\XLib\UiVariable.cs" />
     <Compile Include="Managers\UiManager\XLib\XRoute.cs" />
     <Compile Include="Api\ApiControllerSelector.cs" />

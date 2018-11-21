@@ -8,41 +8,42 @@ namespace AppSDK.Managers.UiManager.XLib
         List<UiVariable> Vars { get; set; }
         Dictionary<string, Prop> Props { get; set; }
         List<T> Childerns { get; set; }
-        T AddProp(string _PropName, object _PropValue = null, UiFunction _PropValueFunc = null);
-        T UpdateProp(string _PropName, object _PropValue = null, UiFunction _PropValueFunc = null);
+        T AddProp(string _PropName, object _PropValue = null, UiFunction _PropValueFunc = null, string _Index = null);
+        T UpdateProp(string _PropName, object _PropValue = null, UiFunction _PropValueFunc = null, string _Index = null);
         T Add(params T[] t);
         T Add(T t);
         T AddTo(ref T t);
         T AddVar(string x, object init = null);
 
-        T Id(string x);
-        T Class(string x);
-        T type(string x);
-        T name(string x);
-        T value(string x);
-        T href(string x);
-        T action(string x);
-        T to(string x);
-        T alt(string x);
-        T width(int x);
-        T height(int x);
-        T activeClassName(string x);
-        T src(string x);
-        T For(string x);
-        T placeholder(string x);
-        T method(string x);
-        T max(string x);
-        T colspan(string x);
-        T cols(string x);
-        T rows(string x);
+        T Id(string value = null , UiFunction  fun = null , string index = null );
+        T Class(string value = null , UiFunction  fun = null , string index = null );
+        T type(string value = null , UiFunction  fun = null , string index = null );
+        T name(string value = null , UiFunction  fun = null , string index = null );
+        T Value(string value = null , UiFunction  fun = null , string index = null );
+        T Content(string value = null, UiFunction fun = null, string index = null);
+        T href(string value = null , UiFunction  fun = null , string index = null );
+        T action(string value = null , UiFunction  fun = null , string index = null );
+        T to(string value = null , UiFunction  fun = null , string index = null );
+        T alt(string value = null , UiFunction  fun = null , string index = null );
+        T width(int? value = null, UiFunction fun = null, string index = null);
+        T height(int? value = null, UiFunction fun = null, string index = null);
+        T activeClassName(string value = null , UiFunction  fun = null , string index = null );
+        T src(string value = null , UiFunction  fun = null , string index = null );
+        T For(string value = null , UiFunction  fun = null , string index = null );
+        T placeholder(string value = null , UiFunction  fun = null , string index = null );
+        T method(string value = null , UiFunction  fun = null , string index = null );
+        T max(string value = null , UiFunction  fun = null , string index = null );
+        T colspan(string value = null , UiFunction  fun = null , string index = null );
+        T cols(string value = null , UiFunction  fun = null , string index = null );
+        T rows(string value = null , UiFunction  fun = null , string index = null );
 
         T hidden();
         T disabled();
-        T role(string x);
-        T aria_label(string x);
-        T aria_expanded(string x);
-        T data_target(string x);
-        T aria_hidden(string x);
+        T role(string value = null , UiFunction  fun = null , string index = null );
+        T aria_label(string value = null , UiFunction  fun = null , string index = null );
+        T aria_expanded(string value = null , UiFunction  fun = null , string index = null );
+        T data_target(string value = null , UiFunction  fun = null , string index = null );
+        T aria_hidden(string value = null , UiFunction  fun = null , string index = null );
         T exact();
         T selected();
 
@@ -51,5 +52,7 @@ namespace AppSDK.Managers.UiManager.XLib
         T OnClick(UiFunction ufunc);
         T OnChange(UiFunction ufunc);
         T LinkedVar(string propname, string var);
+        T RepeatFor(List<object> list);
+        T Include(string templateName, string link = null);
     }
 }

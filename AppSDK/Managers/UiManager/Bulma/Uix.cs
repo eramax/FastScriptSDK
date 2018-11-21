@@ -4,8 +4,10 @@ using AppSDK.Managers.UiManager.XLib;
 
 namespace AppSDK.Managers.UiManager.Bulma
 {
-    public class Uix : UiBase<Uix>
+    public class Uix : UiBase<Uix> , IUI<Uix>
     {
+        public Uix() : base(){ Myself = this; }
+
         public static Uix operator +(Uix left, Uix right)
         {
             left.Add(right);
@@ -130,7 +132,7 @@ namespace AppSDK.Managers.UiManager.Bulma
                 var d1 = Div("navbar-brand");
                 d1 += NavLink(brandLink).Class("navbar-item").Add(Img(brandImage, "image", 112, 28));
                 d1 += New(Tag.a, "navbar-burger burger")
-                    .LinkedVar("is-active", navid).OnClick(new UiFunction() { FuncName = "toggle", Paramaters = new[] { navid } })
+                    .LinkedVar("is-active", navid).OnClick(new UiFunction("toggle",null, navid))
                     .aria_label("menu").role("button").aria_expanded("false").data_target(navid).AddVar(navid, false)
                     .Add(Span().aria_hidden("true"), Span().aria_hidden("true"), Span().aria_hidden("true"));
 
