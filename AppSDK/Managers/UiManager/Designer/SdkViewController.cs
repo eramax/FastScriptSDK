@@ -17,7 +17,11 @@ namespace AppSDK.Managers.UiManager.Designer
         {
             UixPackage pkg = new UixPackage();
 
-            var sec = Uix.BMTags.Section().Include("tb1");
+            var sec = Uix.BMTags.Section();
+            Uix.BMTags.Field("Search", "inp1").AddValidator(new UiFunction("IsInt", null, "inp1"))
+                .AddTo(ref sec);
+              //  .HideIf(new UiFunction("GetLength",null,"tb1.data"));
+            sec.Include("tb1");
             pkg.Components.Add(sec);
 
             List<object> xx = new List<object>();

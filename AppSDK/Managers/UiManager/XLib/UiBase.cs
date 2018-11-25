@@ -25,6 +25,9 @@ namespace AppSDK.Managers.UiManager.XLib
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public List<object> RepeatWith { get; set; }
 
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public List<UiFunction> Validators { get; set; }
+
         public static T New(string _Tag, string _Classes = null, string _Id = null, string _Content = null)
         {
             var ui = new T
@@ -40,52 +43,62 @@ namespace AppSDK.Managers.UiManager.XLib
         }
         public T AddProp(string _PropName, object _PropValue = null, UiFunction _PropValueFunc = null , string _Index = null)
         {
-            if (Myself.Props == null) Myself.Props = new Dictionary<string, Prop>();
-            if (!Myself.Props.ContainsKey(_PropName)) Myself.Props.Add(_PropName, new Prop());
+            Myself.Props = Myself.Props ?? new Dictionary<string, Prop>();
+            if (!Myself.Props.ContainsKey(_PropName))
+                Myself.Props.Add(_PropName, new Prop());
 
             if (_PropValue != null)
             {
-                if (Myself.Props[_PropName].Values == null) Myself.Props[_PropName].Values = new List<object>();
+                Myself.Props[_PropName].Values = Myself.Props[_PropName].Values ?? new List<object>();
                 Myself.Props[_PropName].Values.Add(_PropValue);
             }
 
             if (_PropValueFunc != null)
             {
-                if (Myself.Props[_PropName].Funcs == null) Myself.Props[_PropName].Funcs = new List<UiFunction>();
+                Myself.Props[_PropName].Funcs = Myself.Props[_PropName].Funcs ?? new List<UiFunction>();
                 Myself.Props[_PropName].Funcs.Add(_PropValueFunc);
             }
-
             if (_Index != null)
             {
-                Myself.Props[_PropName].Indexs = new List<string>() { _Index };
+                if (Myself.Props[_PropName].Indexs == null)
+                    Myself.Props[_PropName].Indexs = new List<string>();
+                Myself.Props[_PropName].Indexs.Add(_Index);
             }
             return Myself;
         }
         public T UpdateProp(string _PropName, object _PropValue = null, UiFunction _PropValueFunc = null, string _Index = null)
         {
-            if (Myself.Props == null) Myself.Props = new Dictionary<string, Prop>();
+            Myself.Props = Myself.Props ?? new Dictionary<string, Prop>();
             if (!Myself.Props.ContainsKey(_PropName)) Myself.Props.Add(_PropName, new Prop());
 
             if (_PropValue != null)
             {
-                if (Myself.Props[_PropName].Values == null) Myself.Props[_PropName].Values = new List<object>();
+                Myself.Props[_PropName].Values =  Myself.Props[_PropName].Values ?? new List<object>();
                 Myself.Props[_PropName].Values.Add(_PropValue);
             }
 
             if (_PropValueFunc != null)
             {
-                if (Myself.Props[_PropName].Funcs == null) Myself.Props[_PropName].Funcs = new List<UiFunction>();
+                Myself.Props[_PropName].Funcs = Myself.Props[_PropName].Funcs ?? new List<UiFunction>();
                 Myself.Props[_PropName].Funcs.Add(_PropValueFunc);
             }
             if (_Index != null)
             {
-                Myself.Props[_PropName].Indexs = new List<string>() { _Index };
+                if (Myself.Props[_PropName].Indexs == null)
+                    Myself.Props[_PropName].Indexs = new List<string>();
+                Myself.Props[_PropName].Indexs.Add(_Index);
             }
+            return Myself;
+        }
+        public T AddValidator(UiFunction func)
+        {
+            Validators = Validators ?? new List<UiFunction>();
+            Validators.Add(func);
             return Myself;
         }
         public T Add(T t)
         {
-            if (Myself.Childerns == null) Myself.Childerns = new List<T>();
+            Myself.Childerns = Myself.Childerns ??  new List<T>();
             Myself.Childerns.Add(t);
             return Myself;
         }
@@ -179,6 +192,12 @@ namespace AppSDK.Managers.UiManager.XLib
         public T OnChange(UiFunction ufunc) { return AddProp("OnChangeFunc", null, ufunc); }
         public T LinkedVar(string propname, string var)
         { return AddProp(propname, null, new UiFunction("getVar", null, var)); }
+
+        public T HideIf(string var = null, UiFunction func = null)
+        { return AddProp("HideIf", null, func, var); }
+
+        public T ShowIf(string var = null, UiFunction func = null)
+        { return AddProp("ShowIf", null, func, var); }
 
         public T RepeatFor(List<object> list)
         {

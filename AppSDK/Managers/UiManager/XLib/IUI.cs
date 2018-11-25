@@ -54,5 +54,8 @@ namespace AppSDK.Managers.UiManager.XLib
         T LinkedVar(string propname, string var);
         T RepeatFor(List<object> list);
         T Include(string templateName, string link = null);
+        T AddValidator(UiFunction func);
+        T HideIf(string var = null, UiFunction func = null);
+        T ShowIf(string var = null, UiFunction func = null);
     }
 }
