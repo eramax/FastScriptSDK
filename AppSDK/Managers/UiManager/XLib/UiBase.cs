@@ -14,7 +14,13 @@ namespace AppSDK.Managers.UiManager.XLib
         public List<UiVariable> Vars { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public Dictionary<string, Prop> Props { get; set; }
+        public PropList Props { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public Prop Contents { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public PropList Events { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public List<T> Childerns { get; set; }
@@ -23,7 +29,7 @@ namespace AppSDK.Managers.UiManager.XLib
         public TemplateLoader Loader { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public List<object> RepeatWith { get; set; }
+        public string RepeatWith { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public List<UiFunction> Validators { get; set; }
@@ -37,57 +43,26 @@ namespace AppSDK.Managers.UiManager.XLib
             };
             if (_Id != null) ui.AddProp("id", _Id);
 
-            if (_Content != null) ui.AddProp("Content", _Content);
+            if (_Content != null) ui.AddContent(_Content);
             if (_Classes != null) ui.AddProp("className", _Classes);
             return ui;
         }
         public T AddProp(string _PropName, object _PropValue = null, UiFunction _PropValueFunc = null , string _Index = null)
         {
-            Myself.Props = Myself.Props ?? new Dictionary<string, Prop>();
-            if (!Myself.Props.ContainsKey(_PropName))
-                Myself.Props.Add(_PropName, new Prop());
-
-            if (_PropValue != null)
-            {
-                Myself.Props[_PropName].Values = Myself.Props[_PropName].Values ?? new List<object>();
-                Myself.Props[_PropName].Values.Add(_PropValue);
-            }
-
-            if (_PropValueFunc != null)
-            {
-                Myself.Props[_PropName].Funcs = Myself.Props[_PropName].Funcs ?? new List<UiFunction>();
-                Myself.Props[_PropName].Funcs.Add(_PropValueFunc);
-            }
-            if (_Index != null)
-            {
-                if (Myself.Props[_PropName].Indexs == null)
-                    Myself.Props[_PropName].Indexs = new List<string>();
-                Myself.Props[_PropName].Indexs.Add(_Index);
-            }
+            Myself.Props = Myself.Props ?? new PropList();
+            Myself.Props.AddProp(_PropName, _PropValue, _PropValueFunc, _Index);
             return Myself;
         }
-        public T UpdateProp(string _PropName, object _PropValue = null, UiFunction _PropValueFunc = null, string _Index = null)
+        public T AddContent(object _PropValue = null, UiFunction _PropValueFunc = null, string _Index = null)
         {
-            Myself.Props = Myself.Props ?? new Dictionary<string, Prop>();
-            if (!Myself.Props.ContainsKey(_PropName)) Myself.Props.Add(_PropName, new Prop());
-
-            if (_PropValue != null)
-            {
-                Myself.Props[_PropName].Values =  Myself.Props[_PropName].Values ?? new List<object>();
-                Myself.Props[_PropName].Values.Add(_PropValue);
-            }
-
-            if (_PropValueFunc != null)
-            {
-                Myself.Props[_PropName].Funcs = Myself.Props[_PropName].Funcs ?? new List<UiFunction>();
-                Myself.Props[_PropName].Funcs.Add(_PropValueFunc);
-            }
-            if (_Index != null)
-            {
-                if (Myself.Props[_PropName].Indexs == null)
-                    Myself.Props[_PropName].Indexs = new List<string>();
-                Myself.Props[_PropName].Indexs.Add(_Index);
-            }
+            Myself.Contents = Myself.Contents ?? new Prop();
+            Myself.Contents.Set(_PropValue, _PropValueFunc, _Index);
+            return Myself;
+        }
+        public T AddEvent(string _EventName, object _PropValue = null, UiFunction _PropValueFunc = null, string _Index = null)
+        {
+            Myself.Events = Myself.Events ?? new PropList();
+            Myself.Events.AddProp(_EventName, _PropValue, _PropValueFunc, _Index);
             return Myself;
         }
         public T AddValidator(UiFunction func)
@@ -133,7 +108,7 @@ namespace AppSDK.Managers.UiManager.XLib
         public T Value(string value = null, UiFunction fun = null, string index = null)
         { return AddProp("value", value, fun, index); }
         public T Content(string value = null, UiFunction fun = null, string index = null)
-        { return AddProp("Content", value, fun, index); }
+        { return AddContent(value, fun, index); }
         public T href(string value = null, UiFunction fun = null, string index = null)
         { return AddProp("href", value, fun, index); }
         public T action(string value = null, UiFunction fun = null, string index = null)
@@ -188,8 +163,12 @@ namespace AppSDK.Managers.UiManager.XLib
         public T AddRoute(string action, string link, params string[] vars)
         { return AddProp("Routes", new XRoute(action, link, vars)); }
 
-        public T OnClick(UiFunction ufunc) { return AddProp("OnClickFunc", null, ufunc); }
-        public T OnChange(UiFunction ufunc) { return AddProp("OnChangeFunc", null, ufunc); }
+        //--------------------------------------- Events ---------------------------------//
+        public T OnClick(UiFunction ufunc) { return AddEvent("OnClickFunc", null, ufunc); }
+        public T OnChange(UiFunction ufunc) { return AddEvent("OnChangeFunc", null, ufunc); }
+
+
+        //--------------------------------------- Templating ---------------------------------//
         public T LinkedVar(string propname, string var)
         { return AddProp(propname, null, new UiFunction("getVar", null, var)); }
 
@@ -199,9 +178,9 @@ namespace AppSDK.Managers.UiManager.XLib
         public T ShowIf(string var = null, UiFunction func = null)
         { return AddProp("ShowIf", null, func, var); }
 
-        public T RepeatFor(List<object> list)
+        public T RepeatFor(string listName)
         {
-            RepeatWith = new List<object>() { list };
+            RepeatWith = listName;
             return Myself;
         }
 

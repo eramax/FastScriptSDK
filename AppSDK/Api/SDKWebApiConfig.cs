@@ -3,6 +3,8 @@ using Microsoft.Owin.Security.OAuth;
 using System.Web.Http.Dispatcher;
 using AppSDK.Managers.RouteManager;
 using System.Collections.Generic;
+using System.Net.Http.Formatting;
+using System.Web.Http.Cors;
 
 namespace AppSDK.Api
 {
@@ -18,6 +20,14 @@ namespace AppSDK.Api
             //config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
             //config.Services.Replace(typeof(IHttpControllerSelector), new ApiControllerSelector(config));
+            string origin = "*";
+
+            EnableCorsAttribute cors = new EnableCorsAttribute(origin, "*", "GET,POST");
+
+            config.EnableCors(cors);
+
+            GlobalConfiguration.Configuration.Formatters.Clear();
+            GlobalConfiguration.Configuration.Formatters.Add(new JsonMediaTypeFormatter());
 
             // Web API routes
             config.MapHttpAttributeRoutes();

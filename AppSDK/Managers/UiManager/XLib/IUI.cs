@@ -6,10 +6,14 @@ namespace AppSDK.Managers.UiManager.XLib
         string Type { get; set; }
         string Key { get; set; }
         List<UiVariable> Vars { get; set; }
-        Dictionary<string, Prop> Props { get; set; }
+        PropList Props { get; set; }
+        Prop Contents { get; set; }
+        PropList Events { get; set; }
         List<T> Childerns { get; set; }
+        string RepeatWith { get; set; }
         T AddProp(string _PropName, object _PropValue = null, UiFunction _PropValueFunc = null, string _Index = null);
-        T UpdateProp(string _PropName, object _PropValue = null, UiFunction _PropValueFunc = null, string _Index = null);
+        T AddEvent(string _EventName, object _PropValue = null, UiFunction _PropValueFunc = null, string _Index = null);
+        T AddContent(object _PropValue = null, UiFunction _PropValueFunc = null, string _Index = null);
         T Add(params T[] t);
         T Add(T t);
         T AddTo(ref T t);
@@ -52,7 +56,7 @@ namespace AppSDK.Managers.UiManager.XLib
         T OnClick(UiFunction ufunc);
         T OnChange(UiFunction ufunc);
         T LinkedVar(string propname, string var);
-        T RepeatFor(List<object> list);
+        T RepeatFor(string listName);
         T Include(string templateName, string link = null);
         T AddValidator(UiFunction func);
         T HideIf(string var = null, UiFunction func = null);

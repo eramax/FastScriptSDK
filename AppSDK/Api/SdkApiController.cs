@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using AppSDK.interfaces;
 using DbManager.DAL;
 using DbManager.Models;
