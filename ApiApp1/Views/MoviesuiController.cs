@@ -1,4 +1,4 @@
-﻿using ApiApp1.Models;
+﻿/*using ApiApp1.Models;
 using AppSDK.Managers.UiManager.Bulma;
 using AppSDK.Managers.UiManager.Designer;
 using AppSDK.Managers.UiManager.XLib;
@@ -9,15 +9,17 @@ namespace ApiApp1.Views
 {
     public class MoviesuiController : SdkCrudViewController<Movie, DContext>
     {
+
+        /*
         public override UixPackage List()
         {
             UixPackage pkg = new UixPackage();
 
             var section = Uix.BMTags.Section();
-            Uix.BMTags.Field("Search", "inp1").AddValidator(new UiFunction("IsInt", null, "inp1"))
+            Uix.BMTags.Field("Search", "inp1").AddValidator(new UiFunction("IsInt").AddParameter("var1",null,"inp1"))
                 .AddTo(ref section);
             //  .HideIf(new UiFunction("GetLength",null,"tb1.data"));
-            section.Include("tb1");
+            section.Import("tb1");
             pkg.Components.Add(section);
 
             List<object> xx = new List<object>();
@@ -25,38 +27,48 @@ namespace ApiApp1.Views
             pkg.Data.Add("list1", xx);
 
             var buttonsTemplate = Uix.Tags.Div().Id("buttonsTemplate").Add(
-                Uix.BMTags.Buttun().Content("Edit").OnClick(new UiFunction("OpenLink", null, "link")),
-                Uix.BMTags.Buttun().Content("Delete").OnClick(new UiFunction("SubmitForm", "http://dadad.dasdas.dasd", "id"))
+                Uix.BMTags.Buttun().IsPrimary().Content("Open").OnClick(new UiFunction("OpenLink").AddParameter("link",  "www.google.com")),
+                Uix.BMTags.Buttun().IsWarning().Content("Edit").OnClick(new UiFunction("Update").AddParameter("index", null, "Name", true)
+                .AddParameter("Val","Ahmed Essam")),
+                Uix.BMTags.Buttun().IsDanger().Content("Delete").OnClick(new UiFunction("Delete").AddParameter("index",null,"",true))
                 );
 
-            pkg.PartialComponents.Add(buttonsTemplate);
-            var tb1 = Uix.Tags.Table().Id("tb1").Add(
-                Uix.Tags.Thead().Add(
-                    Uix.Tags.Th("Name"),
-                    Uix.Tags.Th("ID"),
-                    Uix.Tags.Th("Email"),
-                    Uix.Tags.Th("Firt Friend Name"),
-                    Uix.Tags.Th("First Friend Age"),
-                    Uix.Tags.Th("Number or Friends"),
-                    Uix.Tags.Th("Operations")
-                ))
-                .Add(
-                    Uix.Tags.Tbody().Add(
-                        Uix.Tags.Tr().RepeatFor("list1").Add(
-                            Uix.Tags.Td().Content(index: "Name"),
+            pkg.PartialComponents.Add("buttonsTemplate",buttonsTemplate);
+
+            var trTemplate = Uix.Tags.Tr().RepeatFor("list1").Add(
                             Uix.Tags.Td().Content(index: "Id"),
+                            Uix.Tags.Td().Content(index: "Name"),
+                            Uix.Tags.Td().Content(index: "Age"),
                             Uix.Tags.Td().Content(index: "Email"),
                             Uix.Tags.Td().Content(index: "Friends.0.Name"),
                             Uix.Tags.Td().Content(index: "Friends.0.Age"),
-                            Uix.Tags.Td().Content(fun: new UiFunction("GetLengh", null, "Friends")),
-                            Uix.Tags.Td().Include("buttonsTemplate")
-                        )
-                    )
-                 );
-            pkg.PartialComponents.Add(tb1);
+                            Uix.Tags.Td().Content(fun: new UiFunction("GetLengh").AddParameter("inp",null, "Friends")),
+                            Uix.Tags.Td().Import("buttonsTemplate"));
+
+            pkg.PartialComponents.Add("trTemplate", trTemplate);
+
+            var tb1 = Uix.BMTags.Table("trTemplate", "ID", "Name", "Age", "Email", "First Friend Name", "First Friend Age", "Number or Friends", "Operations");
+
+            pkg.PartialComponents.Add("tb1",tb1);
+            return pkg;
+        }
+
+
+        public override UixPackage Form()
+        {
+            UixPackage pkg = new UixPackage();
+            
+
+            //var section = Uix.BMTags.
+
+
             return pkg;
         }
     }
+
+
+
+
     public class Person
     {
         public string Name { get; set; }
@@ -74,5 +86,5 @@ namespace ApiApp1.Views
 
         }
     }
-
-}
+    
+}*/

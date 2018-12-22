@@ -137,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\ErrorApiController.cs" />
+    <Compile Include="Api\SDKEmptyAPIController.cs" />
     <Compile Include="Api\SwaggerConfig.cs" />
     <Compile Include="Helpers\NewStatic.cs" />
     <Compile Include="interfaces\IGetNew.cs" />
@@ -157,9 +158,23 @@
     <Compile Include="Managers\RouteManager\SdkRouteManager.cs" />
     <Compile Include="Managers\SmsManager\SmsManager.cs" />
     <Compile Include="Managers\UiManager\Designer\SdkViewController.cs" />
-    <Compile Include="Managers\UiManager\PropList.cs" />
-    <Compile Include="Managers\UiManager\TemplateLoader.cs" />
-    <Compile Include="Managers\UiManager\XLib\Layout.cs" />
+    <Compile Include="Managers\UiManager\i18n\i18n.cs" />
+    <Compile Include="Managers\UiManager\UiLib\Bootstrap\Bootstrap.cs" />
+    <Compile Include="Managers\UiManager\UiLib\FunctionParameter.cs" />
+    <Compile Include="Managers\UiManager\UiLib\IUiComponent.cs" />
+    <Compile Include="Managers\UiManager\UiLib\Layout.cs" />
+    <Compile Include="Managers\UiManager\UiLib\Page.cs" />
+    <Compile Include="Managers\UiManager\UiLib\Prop.cs" />
+    <Compile Include="Managers\UiManager\UiLib\PropList.cs" />
+    <Compile Include="Managers\UiManager\UiLib\Tag.cs" />
+    <Compile Include="Managers\UiManager\UiLib\TemplateLoader.cs" />
+    <Compile Include="Managers\UiManager\UiLib\UiBase.cs" />
+    <Compile Include="Managers\UiManager\UiLib\UiDesign.cs" />
+    <Compile Include="Managers\UiManager\UiLib\UiFunction.cs" />
+    <Compile Include="Managers\UiManager\XLib\FuncList.cs" />
+    <Compile Include="Managers\UiManager\XLib\FunctionParameter.cs" />
+    <Compile Include="Managers\UiManager\XLib\PropList.cs" />
+    <Compile Include="Managers\UiManager\XLib\TemplateLoader.cs" />
     <Compile Include="Managers\UiManager\XLib\Prop.cs" />
     <Compile Include="Managers\UiManager\XLib\SDKTags.cs" />
     <Compile Include="Managers\UiManager\XLib\Tag.cs" />

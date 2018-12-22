@@ -20,7 +20,7 @@ namespace AppSDK.Managers.UiManager.XLib
         public Prop Contents { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public PropList Events { get; set; }
+        public Dictionary<string, List<UiFunction>> Events { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public List<T> Childerns { get; set; }
@@ -59,10 +59,12 @@ namespace AppSDK.Managers.UiManager.XLib
             Myself.Contents.Set(_PropValue, _PropValueFunc, _Index);
             return Myself;
         }
-        public T AddEvent(string _EventName, object _PropValue = null, UiFunction _PropValueFunc = null, string _Index = null)
+        public T AddEvent(string _EventName,  UiFunction _PropValueFunc)
         {
-            Myself.Events = Myself.Events ?? new PropList();
-            Myself.Events.AddProp(_EventName, _PropValue, _PropValueFunc, _Index);
+            Myself.Events = Myself.Events ?? new Dictionary<string, List<UiFunction>>();
+            if (!Myself.Events.ContainsKey(_EventName))
+                Myself.Events.Add(_EventName, new List<UiFunction>());
+            Myself.Events[_EventName].Add(_PropValueFunc);
             return Myself;
         }
         public T AddValidator(UiFunction func)
@@ -164,13 +166,13 @@ namespace AppSDK.Managers.UiManager.XLib
         { return AddProp("Routes", new XRoute(action, link, vars)); }
 
         //--------------------------------------- Events ---------------------------------//
-        public T OnClick(UiFunction ufunc) { return AddEvent("OnClickFunc", null, ufunc); }
-        public T OnChange(UiFunction ufunc) { return AddEvent("OnChangeFunc", null, ufunc); }
+        public T OnClick(UiFunction ufunc) { return AddEvent("onClick", ufunc); }
+        public T OnChange(UiFunction ufunc) { return AddEvent("onChange", ufunc);  }
 
 
         //--------------------------------------- Templating ---------------------------------//
         public T LinkedVar(string propname, string var)
-        { return AddProp(propname, null, new UiFunction("getVar", null, var)); }
+        { return AddProp(propname, null, new UiFunction("getVar").AddParameter("var",null, var));  }
 
         public T HideIf(string var = null, UiFunction func = null)
         { return AddProp("HideIf", null, func, var); }
@@ -184,10 +186,17 @@ namespace AppSDK.Managers.UiManager.XLib
             return Myself;
         }
 
-        public T Include(string templateName, string link = null)
+        public T Import(string templateName, string link = null)
         {
-            Loader = new TemplateLoader() { Name = templateName, Link = link };
+            var LoaderTag = New(Tag.Loader);
+            LoaderTag.Load(templateName, link);
+            Add(LoaderTag);
             return Myself;
+        }
+        public void Load(string templateName, string link = null)
+        {
+            Loader = new TemplateLoader() { Name = templateName };
+            if (link == null) Loader.LoadFromPartials = templateName;
         }
 
         public class Tags

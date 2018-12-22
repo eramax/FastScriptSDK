@@ -7,6 +7,9 @@ namespace AppSDK.Managers.UiManager.XLib
         public string Name { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string Link { get; set; }
+        public string LoadFromLink { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string LoadFromPartials { get; set; }
     }
 }

@@ -5,6 +5,7 @@
         public const string
             ERoutes = "ERoutes",
             Template = "Template",
-            NavLink = "NavLink";
+            NavLink = "NavLink",
+            Loader = "Loader";
     }
 }

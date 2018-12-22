@@ -132,7 +132,7 @@ namespace AppSDK.Managers.UiManager.Bulma
                 var d1 = Div("navbar-brand");
                 d1 += NavLink(brandLink).Class("navbar-item").Add(Img(brandImage, "image", 112, 28));
                 d1 += New(Tag.a, "navbar-burger burger")
-                    .LinkedVar("is-active", navid).OnClick(new UiFunction("toggle",null, navid))
+                    .LinkedVar("is-active", navid).OnClick(new UiFunction("toggle").AddParameter("var",null,navid))
                     .aria_label("menu").role("button").aria_expanded("false").data_target(navid).AddVar(navid, false)
                     .Add(Span().aria_hidden("true"), Span().aria_hidden("true"), Span().aria_hidden("true"));
 
@@ -179,12 +179,12 @@ namespace AppSDK.Managers.UiManager.Bulma
                 tb.Add(New(Tag.tbody).Add(trs));
                 return tb;
             }
-            public static Uix Table(Uix template, params string[] threads)
+            public static Uix Table(string template, params string[] threads)
             {
                 var ths = threads.ToList().Select(i => New(Tag.th, null, null, i));
                 var tb = New(Tag.table, "table is-bordered is-striped is-hoverable is-fullwidth")
                     .Add(New(Tag.thead).Add(New(Tag.tr).Add(ths.ToArray())));
-                tb.Add(New(Tag.tbody).Add(template));
+                tb.Add(New(Tag.tbody).Import(template));
                 return tb;
             }
             public static Uix Template(string classes = null) { return New(Tag.Template, classes); }

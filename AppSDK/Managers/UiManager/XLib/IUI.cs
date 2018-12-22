@@ -8,23 +8,33 @@ namespace AppSDK.Managers.UiManager.XLib
         List<UiVariable> Vars { get; set; }
         PropList Props { get; set; }
         Prop Contents { get; set; }
-        PropList Events { get; set; }
+        Dictionary<string, List<UiFunction>> Events { get; set; }
         List<T> Childerns { get; set; }
         string RepeatWith { get; set; }
         T AddProp(string _PropName, object _PropValue = null, UiFunction _PropValueFunc = null, string _Index = null);
-        T AddEvent(string _EventName, object _PropValue = null, UiFunction _PropValueFunc = null, string _Index = null);
+        T AddEvent(string _EventName, UiFunction _PropValueFunc);
         T AddContent(object _PropValue = null, UiFunction _PropValueFunc = null, string _Index = null);
         T Add(params T[] t);
         T Add(T t);
         T AddTo(ref T t);
+        T OnClick(UiFunction ufunc);
+        T OnChange(UiFunction ufunc);
+        T RepeatFor(string listName);
+        void Load(string templateName, string link = null);
+        T Import(string templateName, string link = null);
+        T Id(string value = null, UiFunction fun = null, string index = null);
+        T Class(string value = null, UiFunction fun = null, string index = null);
+        T type(string value = null, UiFunction fun = null, string index = null);
+        T name(string value = null, UiFunction fun = null, string index = null);
+        T Value(string value = null, UiFunction fun = null, string index = null);
+        T Content(string value = null, UiFunction fun = null, string index = null);
+
+
+
+
         T AddVar(string x, object init = null);
 
-        T Id(string value = null , UiFunction  fun = null , string index = null );
-        T Class(string value = null , UiFunction  fun = null , string index = null );
-        T type(string value = null , UiFunction  fun = null , string index = null );
-        T name(string value = null , UiFunction  fun = null , string index = null );
-        T Value(string value = null , UiFunction  fun = null , string index = null );
-        T Content(string value = null, UiFunction fun = null, string index = null);
+
         T href(string value = null , UiFunction  fun = null , string index = null );
         T action(string value = null , UiFunction  fun = null , string index = null );
         T to(string value = null , UiFunction  fun = null , string index = null );
@@ -53,12 +63,9 @@ namespace AppSDK.Managers.UiManager.XLib
 
         T AddRoute(string action, string link, params string[] vars);
 
-        T OnClick(UiFunction ufunc);
-        T OnChange(UiFunction ufunc);
-        T LinkedVar(string propname, string var);
-        T RepeatFor(string listName);
-        T Include(string templateName, string link = null);
+
         T AddValidator(UiFunction func);
+        T LinkedVar(string propname, string var);
         T HideIf(string var = null, UiFunction func = null);
         T ShowIf(string var = null, UiFunction func = null);
     }

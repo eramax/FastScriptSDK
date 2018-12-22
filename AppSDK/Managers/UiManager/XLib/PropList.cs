@@ -10,6 +10,7 @@ namespace AppSDK.Managers.UiManager.XLib
     {
         public void AddProp(string _PropName, object _PropValue = null, UiFunction _PropValueFunc = null, string _Index = null)
         {
+            if (_PropValue == null && _PropValueFunc == null && _Index == null) return;
             if (!this.ContainsKey(_PropName))
                 this.Add(_PropName, new Prop());
 
